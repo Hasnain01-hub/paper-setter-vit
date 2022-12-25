@@ -14,7 +14,7 @@ import {
 } from "firebase/auth";
 import "./login.css";
 import Lottie from "lottie-react";
-import animationData from "../../assets/otp_lootie.json";
+import animationData from "../../assets/two-factor-authentication.json";
 import { useHistory } from "react-router-dom";
 
 const Otpscreen = () => {
@@ -125,8 +125,14 @@ const Otpscreen = () => {
     }
   };
   return (
-    <div className="otpscreen">
-      {/* <Lottie animationData={animationData} loop={true} /> */}
+    <div className="otpscreen" style={{ display: "flex", flexWrap: "nowrap" }}>
+      <Lottie
+        animationData={animationData}
+        loop={true}
+        autoPlay={true}
+        className="lottie"
+        style={{ maxWidth: "20%", margin: "0 auto" }}
+      />
       <div className="profile-authentication-area">
         <div className="d-table">
           <div className="d-table-cell">

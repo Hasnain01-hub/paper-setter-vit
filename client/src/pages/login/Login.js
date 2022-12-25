@@ -46,7 +46,6 @@ const LoginPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // const auths = getAuth();
       await auth.signInWithEmailAndPassword(email, password);
     } catch (error) {
       if (error.code === "auth/multi-factor-auth-required") {

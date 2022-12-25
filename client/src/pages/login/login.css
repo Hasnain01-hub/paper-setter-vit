@@ -570,16 +570,25 @@ Profile Authentication Area CSS
   background-color: var(--blackColor);
   color: var(--whiteColor);
 }
+.otpscreen {
+  justify-content: center;
+  flex-direction: column;
+}
 
 /* Max width 767px */
 @media only screen and (max-width: 767px) {
+  .lottie {
+    max-width: 50% !important;
+  }
   .profile-authentication-area {
     height: auto;
-    padding-top: 120px;
-    padding-bottom: 110px;
+    /* padding-top: 120px;
+    padding-bottom: 110px; */
   }
+
   .signin-form {
     max-width: 100%;
+
     text-align: center;
     padding: 20px 15px;
   }

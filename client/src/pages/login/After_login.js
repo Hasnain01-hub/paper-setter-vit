@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import Lottie from "lottie-react";
+import animationData from "../../assets/two-factor-authentication.json";
 import { useDispatch } from "react-redux";
 import { loginSuccess } from "../../reducer";
 import { createOrUpdateUser } from "../../function/User";
@@ -12,6 +14,7 @@ import {
   PhoneMultiFactorGenerator,
   RecaptchaVerifier,
 } from "firebase/auth";
+
 const After_login = () => {
   const [passwordShown, setPasswordShown] = useState(false);
   const togglePasswordVisiblity = () => {
@@ -86,8 +89,17 @@ const After_login = () => {
 
   return (
     <>
-      <div className="otpscreen">
-        {/* <Lottie animationData={animationData} loop={true} /> */}
+      <div
+        className="otpscreen"
+        style={{ display: "flex", flexWrap: "nowrap" }}
+      >
+        <Lottie
+          animationData={animationData}
+          loop={true}
+          autoPlay={true}
+          className="lottie"
+          style={{ maxWidth: "20%", margin: "0 auto" }}
+        />
         <div className="profile-authentication-area">
           <div className="d-table">
             <div className="d-table-cell">
