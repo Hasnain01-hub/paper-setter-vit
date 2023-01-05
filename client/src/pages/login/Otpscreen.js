@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { loginSuccess } from "../../reducer";
-import { createOrUpdateUser, register } from "../../function/User";
+import { createOrUpdateUser } from "../../function/User";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Cryptr from "cryptr";
@@ -26,7 +26,7 @@ const Otpscreen = () => {
     setPasswordShown(passwordShown ? false : true);
   };
   const [verification, setverification] = useState("");
-  const [userdata, setuser] = useState({});
+  // const [userdata, setuser] = useState({});
   const history = useHistory();
   useEffect(() => {
     const getdata = JSON.parse(window.localStorage.getItem("user"));
@@ -34,14 +34,15 @@ const Otpscreen = () => {
       history.push("/register");
     }
     sentotp(getdata);
-    setuser(getdata);
   }, []);
   const sentotp = async (getdata) => {
+    /* A listener that triggers whenever the authentication state changes. */
     auth.onAuthStateChanged(async (user) => {
-      console.log(user);
+      /* Decrypting the phone number that was encrypted in the previous step. */
       const decryptedphone = cryptr.decrypt(getdata.phone);
       // const decryptedpassword = cryptr.decrypt(getdata.password);
 
+      /* Creating a new recaptcha verifier. */
       const recaptchaVerifier = new RecaptchaVerifier(
         "2fa-captcha",
         { size: "invisible" },
@@ -73,69 +74,65 @@ const Otpscreen = () => {
   const verifyotp = async (e) => {
     e.preventDefault();
     try {
-      // const decryptedphone = cryptr.decrypt(userdata.phone);
-      // const decrypteduser = cryptr.decrypt(userdata.user);
-      // const idTokenResult = await user.getIdTokenResult();
-      // await register(phone, idTokenResult.token)
-      //   .then((res) => {
-      //     // dispatch(
-      //     //   loginSuccess({
-      //     //     name: res.data.name,
-      //     //     email: res.data.email,
-      //     //     phone: res.data.phone,
-      //     //     approved: res.data.approved,
-      //     //     token: idTokenResult.token,
-      //     //     role: res.data.role,
-      //     //     _id: res.data._id,
-      //     //   })
-      //     // );
-      //     // roleBasedRedirect(res);
-      //     console.log(res.data);
-      //   })
-      //   .catch((err) => {
-      //     console.log(err);
-      //   });
-      // history.push("/");
-      // alert("successfully Register");
-
       // Ask user for the verification code. Then:
+      /* Creating a credential object that can be used to sign in a user. */
       const cred = PhoneAuthProvider.credential(verification, otp);
-      console.log(cred);
-      // const multiFactorAssertion = PhoneMultiFactorGenerator.assertion(cred);
-
-      // return multiFactor(decrypteduser).enroll(
-
-      //   multiFactorAssertion,
-      //   decryptedphone
-      // );
+      // const decryptedphone = cryptr.decrypt(userdata.phone);
       const multiFactorAssertion = PhoneMultiFactorGenerator.assertion(cred);
 
       const user = auth.currentUser;
-      await user.multiFactor
-        .enroll(multiFactorAssertion, "phone number")
-        .then((enrollment) => {
-          console.log(enrollment);
-          history.push("/home");
-        });
+      /* Enrolling the user in the multi-factor authentication. */
+      await user.multiFactor.enroll(multiFactorAssertion, "phone number");
 
-      localStorage.removeItem("user");
+      const userdata = {
+        email: user.email,
+        phone: user.multiFactor.enrolledFactors[0]["phoneNumber"],
+        photourl:
+          user.photourl ??
+          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTySCspUW6-V1Bzn02W5uXHPgQkQEppx8zhc2gLe3RMnA&s",
+      };
+      await createOrUpdateUser(userdata)
+        .then((res) => {
+          dispatch(
+            loginSuccess({
+              name: res.data.name,
+              email: res.data.email,
+              phone: res.data.phone,
+              approved: res.data.approved,
+              picture: res.data.picture,
+              // token: user.token,
+              role: res.data.role,
+              _id: res.data._id,
+            })
+          );
+          history.push("/waitingscreen");
+          /* Removing the user from localStorage. */
+          localStorage.removeItem("user");
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     } catch (err) {
       toast.error("Invalid OTP");
       console.log(err);
     }
   };
+
   return (
-    <div className="otpscreen" style={{ display: "flex", flexWrap: "nowrap" }}>
-      <Lottie
-        animationData={animationData}
-        loop={true}
-        autoPlay={true}
-        className="lottie"
-        style={{ maxWidth: "20%", margin: "0 auto" }}
-      />
-      <div className="profile-authentication-area">
-        <div className="d-table">
-          <div className="d-table-cell">
+    <>
+      <div
+        className="otpscreen"
+        style={{ display: "flex", flexWrap: "nowrap" }}
+      >
+        <Lottie
+          animationData={animationData}
+          loop={true}
+          autoPlay={true}
+          className="lottie"
+          style={{ maxWidth: "20%", margin: "0 auto" }}
+        />
+        <div className="profile-authentication-area">
+          <div className="d-table1">
             <div className="container">
               <div className="signin-form">
                 <h2 style={{ fontWeight: "bold" }}>Enter OTP</h2>
@@ -181,14 +178,15 @@ const Otpscreen = () => {
               </div>
             </div>
           </div>
+
+          <div
+            id="2fa-captcha"
+            style={{ display: "flex", justifyContent: "center" }}
+          ></div>
         </div>
-        <div
-          id="2fa-captcha"
-          style={{ display: "flex", justifyContent: "center" }}
-        ></div>
+        <ToastContainer />
       </div>
-      <ToastContainer />
-    </div>
+    </>
   );
 };
 

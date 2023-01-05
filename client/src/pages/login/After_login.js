@@ -9,7 +9,6 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { auth } from "../../Firebase";
 import {
-  multiFactor,
   PhoneAuthProvider,
   PhoneMultiFactorGenerator,
   RecaptchaVerifier,
@@ -24,8 +23,20 @@ const After_login = () => {
   const [otp, setotp] = useState("");
   const history = useHistory();
   React.useEffect(() => {
-    sendOtp();
+    const verfifer = JSON.parse(window.localStorage.getItem("approvedsignin"));
+    if (verfifer === true) {
+      sendOtp();
+    } else {
+      history.push("/");
+    }
   }, []);
+  const rolebasedredirect = (res) => {
+    if (res.data.approved === true) {
+      history.push("/home");
+    } else {
+      history.push("/waitingscreen");
+    }
+  };
   const dispatch = useDispatch();
   const sendOtp = async () => {
     const recaptchaVerifier = new RecaptchaVerifier(
@@ -48,39 +59,51 @@ const After_login = () => {
       });
   };
   const verify = async (e) => {
+    e.preventDefault();
     try {
-      e.preventDefault();
-
       const cred = PhoneAuthProvider.credential(verification, otp);
-      console.log(cred);
+
       const multiFactorAssertion = PhoneMultiFactorGenerator.assertion(cred);
 
       const credential = await window.resolver
         .resolveSignIn(multiFactorAssertion)
         .then((enrollment) => {
-          // const idTokenResult = await user.getIdTokenResult();
-          //to add data in mongoDb for email sign in method
-          // createOrUpdateUser(idTokenResult.token)
-          //   .then((res) => {
-          //     dispatch(
-          //       loginSuccess({
-          //         name: res.data.name,
-          //         email: res.data.email,
-          //         approved: res.data.approved,
-          //         token: idTokenResult.token,
-          //         role: res.data.role,
-          //         _id: res.data._id,
-          //       })
-          //     );
-          //     // roleBasedRedirect(res);
-          //     history.push("/otp");
-          //   })
-          //   .catch((err) => console.log(err));
-          console.log(enrollment);
-          history.push("/home");
-        });
+          auth.onAuthStateChanged(async (user) => {
+            if (user) {
+              console.log(user);
+              // const idTokenResult = await user.getIdTokenResult();
+              //to add data in mongoDb for email sign in method
+              const userdata = {
+                email: user.email,
+                phone: user.multiFactor.enrolledFactors[0]["phoneNumber"],
+                photourl:
+                  user.photourl ??
+                  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTySCspUW6-V1Bzn02W5uXHPgQkQEppx8zhc2gLe3RMnA&s",
+              };
+              await createOrUpdateUser(userdata)
+                .then((res) => {
+                  dispatch(
+                    loginSuccess({
+                      name: res.data.name,
+                      email: res.data.email,
+                      phone: res.data.phone,
+                      approved: res.data.approved,
+                      picture: res.data.picture,
+                      role: res.data.role,
+                      _id: res.data._id,
+                    })
+                  );
+                  rolebasedredirect(res);
 
-      console.log(credential);
+                  /* Removing the user from localStorage. */
+                  localStorage.removeItem("user");
+                })
+                .catch((err) => {
+                  console.log(err);
+                });
+            }
+          });
+        });
     } catch (err) {
       toast.error("Invalid OTP");
       console.log(err);
@@ -101,58 +124,56 @@ const After_login = () => {
           style={{ maxWidth: "20%", margin: "0 auto" }}
         />
         <div className="profile-authentication-area">
-          <div className="d-table">
-            <div className="d-table-cell">
-              <div className="container">
-                <div className="signin-form">
-                  <h2 style={{ fontWeight: "bold" }}>Enter OTP</h2>
-                  <form>
-                    <div className="form-group">
-                      <input
-                        type={passwordShown ? "text" : "password"}
-                        className="form-control"
-                        placeholder="OTP"
-                        value={otp}
-                        onChange={(e) => setotp(e.target.value)}
-                      />
-                      {passwordShown ? (
-                        <i
-                          style={{
-                            position: "absolute",
-                            marginTop: "7px",
-                            marginLeft: "-20px",
-                          }}
-                          onClick={togglePasswordVisiblity}
-                          className="ri-eye-line"
-                        >
-                          {" "}
-                        </i>
-                      ) : (
-                        <i
-                          style={{
-                            position: "absolute",
-                            marginTop: "7px",
-                            marginLeft: "-20px",
-                          }}
-                          onClick={togglePasswordVisiblity}
-                          className="ri-eye-off-line"
-                        ></i>
-                      )}
-                    </div>
+          <div className="d-table1">
+            <div className="container">
+              <div className="signin-form">
+                <h2 style={{ fontWeight: "bold" }}>Enter OTP</h2>
+                <form>
+                  <div className="form-group">
+                    <input
+                      type={passwordShown ? "text" : "password"}
+                      className="form-control"
+                      placeholder="OTP"
+                      value={otp}
+                      onChange={(e) => setotp(e.target.value)}
+                    />
+                    {passwordShown ? (
+                      <i
+                        style={{
+                          position: "absolute",
+                          marginTop: "7px",
+                          marginLeft: "-20px",
+                        }}
+                        onClick={togglePasswordVisiblity}
+                        className="ri-eye-line"
+                      >
+                        {" "}
+                      </i>
+                    ) : (
+                      <i
+                        style={{
+                          position: "absolute",
+                          marginTop: "7px",
+                          marginLeft: "-20px",
+                        }}
+                        onClick={togglePasswordVisiblity}
+                        className="ri-eye-off-line"
+                      ></i>
+                    )}
+                  </div>
 
-                    <div className="row align-items-center"></div>
-                    <button onClick={verify} type="submit">
-                      Verify
-                    </button>
-                  </form>
-                </div>
+                  <div className="row align-items-center"></div>
+                  <button onClick={verify} type="submit">
+                    Verify
+                  </button>
+                </form>
               </div>
             </div>
+            <div
+              id="2fa-captcha"
+              style={{ display: "flex", justifyContent: "center" }}
+            ></div>
           </div>
-          <div
-            id="2fa-captcha"
-            style={{ display: "flex", justifyContent: "center" }}
-          ></div>
         </div>
         <ToastContainer />
       </div>

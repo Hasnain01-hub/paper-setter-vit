@@ -9,32 +9,34 @@ import { loginSuccess } from "../src/reducer/index";
 import Register from "./pages/login/Register";
 import Otpscreen from "./pages/login/Otpscreen";
 import After_login from "./pages/login/After_login";
+import Home from "./pages/home/Home";
+import WaitingScreen from "./pages/home/WaitingScreen";
 function App() {
   const dispatch = useDispatch();
 
-  // useEffect(() => {
-  //   const unsubscribe = auth.onAuthStateChanged(async (user) => {
-  //     if (user) {
-  //       const idTokenResult = await user.getIdTokenResult();
-  //       currentUser(idTokenResult.token)
-  //         .then((res) => {
-  //           dispatch(
-  //             loginSuccess({
-  //               name: res.data.name,
-  //               email: res.data.email,
-  //               phone: res.data.phone,
-  //               approved: res.data.approved,
-  //               token: idTokenResult.token,
-  //               role: res.data.role,
-  //               _id: res.data._id,
-  //             })
-  //           );
-  //         })
-  //         .catch();
-  //     }
-  //   });
-  //   return () => unsubscribe();
-  // }, [dispatch]);
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged(async (user) => {
+      if (user) {
+        const idTokenResult = await user.getIdTokenResult();
+        currentUser(idTokenResult.token)
+          .then((res) => {
+            dispatch(
+              loginSuccess({
+                name: res.data.name,
+                email: res.data.email,
+                phone: res.data.phone,
+                approved: res.data.approved,
+                token: idTokenResult.token,
+                role: res.data.role,
+                _id: res.data._id,
+              })
+            );
+          })
+          .catch();
+      }
+    });
+    return () => unsubscribe();
+  }, [dispatch]);
 
   return (
     <>
@@ -43,8 +45,9 @@ function App() {
         <Route exact path="/register" component={Register} />
         <Route exact path="/otp" component={Otpscreen} />
         <Route exact path="/loginotp" component={After_login} />
-        
+        <Route exact path="/waitingscreen" component={WaitingScreen} />
         <Route exact path="/dashboard" component={Slidebar} />
+        <Route exact path="/home" component={Home} />
       </Switch>
     </>
   );

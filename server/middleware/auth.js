@@ -6,8 +6,10 @@ exports.authCheck = async (req, res, next) => {
     const firebaseUser = await admin
       .auth()
       .verifyIdToken(req.headers.authtoken);
+    // console.log(req.user.multiFactor.enrolledFactors[0]["phoneNumber"]);
     req.user = firebaseUser;
-    console.log(req.body);
+    console.log("*&*&*&&", req.body);
+    console.log("*&*&*&&", req.user);
   } catch (err) {
     res.status(401).json({
       err: "Invalid or expired token",

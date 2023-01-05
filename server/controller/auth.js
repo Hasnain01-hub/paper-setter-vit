@@ -2,10 +2,16 @@ const User = require("../models/user");
 
 //to create or update user
 exports.createOrUpdateUser = async (req, res) => {
-  const { name, picture, email } = req.user;
+  const { email, phone, photourl } = req.body;
+
   const user = await User.findOneAndUpdate(
     { email },
-    { name: email.split("@")[0], picture },
+    {
+      ...{
+        name: req.body.email.split("@")[0],
+        picture: photourl,
+      },
+    },
     { new: true }
   );
 
@@ -15,26 +21,13 @@ exports.createOrUpdateUser = async (req, res) => {
     const newUser = await User({
       email,
       name: email.split("@")[0],
-      picture,
+      picture: photourl,
+      approved: false,
+      phone: phone,
+      role: "user",
     }).save();
     res.json(newUser);
   }
-};
-
-exports.register = async (req, res) => {
-  // const val = await User.findOne({ email: req.user.email }).exec();
-  // if (val != undefined) return console.log(val);
-  // const { name, picture, email } = req.user;
-  // const newUser = await User({
-  //   email: email,
-  //   name: email.split("@")[0],
-  //   approved: false,
-  //   phone: req.phone,
-  //   picture: picture,
-  // }).save();
-  // res.json(newUser);
-  console.log(req.user);
-  console.log(req.phone);
 };
 
 //to get current user

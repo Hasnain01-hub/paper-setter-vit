@@ -15,8 +15,8 @@ mongoose
     process.env.REACT_APP_MONGO_URI ?? "mongodb://localhost:27017/papersetter",
     {
       useNewUrlParser: true,
-      // useCreateIndex: true,
-      // useFindAndModify: false,
+      useCreateIndex: true,
+      useFindAndModify: false,
       useUnifiedTopology: true,
     }
   )
