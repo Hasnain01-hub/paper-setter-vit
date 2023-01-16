@@ -1,5 +1,5 @@
 import { logoutSuccess } from "../../reducer";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import React from "react";
 // import './vendors/ti-icons/css/themify-icons.css'
@@ -16,35 +16,34 @@ const Slidebar = () => {
       history.push("/");
     });
   };
-  
-  
+
   return (
     <>
       <nav className="sidebar sidebar-offcanvas" id="sidebar">
         <ul className="nav">
           <li className="nav-item">
-            <a className="nav-link" href="/">
+            <Link className="nav-link" to="/add-subject">
               <i class="ri-building-4-line"></i>&nbsp;
               <span className="menu-title">Departments</span>
-            </a>
+            </Link>
           </li>
           <li className="nav-item">
-            <a className="nav-link" href="/view-product">
+            <Link className="nav-link" to="/view-product">
               <i class="ri-file-line"></i>&nbsp;
               <span className="menu-title">View Paper</span>
-            </a>
+            </Link>
           </li>
           <li className="nav-item">
-            <a className="nav-link" href="/contact-details">
+            <Link className="nav-link" to="/contact-details">
               <i class="ri-attachment-line"></i>&nbsp;
               <span className="menu-title">Upload Paper</span>
-            </a>
+            </Link>
           </li>
           <li className="nav-item">
-            <a className="nav-link" href="/testimonials">
+            <Link className="nav-link" to="/testimonials">
               <i class="ri-map-pin-user-line"></i>&nbsp;
               <span className="menu-title">Profile Page</span>
-            </a>
+            </Link>
           </li>
           <li className="nav-item">
             <span className="nav-link">

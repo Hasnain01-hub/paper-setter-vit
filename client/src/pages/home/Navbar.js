@@ -35,7 +35,8 @@ const Navbar = () => {
             <a className="navbar-brand brand-logo mr-5" href="/">
               <img
                 src="https://res.cloudinary.com/crunchbase-production/image/upload/c_lpad,h_256,w_256,f_auto,q_auto:eco,dpr_1/ue6gshlqvsqg2vasd89l"
-                class="mr-2"
+                className="mr-2"
+                style={{ height: "50px" }}
                 alt="logo"
               />
             </a>

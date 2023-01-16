@@ -2,20 +2,20 @@ const mongoose = require("mongoose");
 
 const subjectSchema = new mongoose.Schema(
   {
-    subjectname: {
+    branch: {
       type: String,
       required: true,
     },
-    subjectcode: {
+    subject: {
       type: String,
       required: true,
     },
-    subjecteacher: {
+    year: {
       type: String,
       required: true,
     },
-    subjectpaper: {
-      type: Array,
+    sem: {
+      type: String,
     },
   },
   { timestamps: true }

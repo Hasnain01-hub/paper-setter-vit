@@ -11,6 +11,7 @@ import Otpscreen from "./pages/login/Otpscreen";
 import After_login from "./pages/login/After_login";
 import Home from "./pages/home/Home";
 import WaitingScreen from "./pages/home/WaitingScreen";
+import Departments from "./pages/home/Departments";
 function App() {
   const dispatch = useDispatch();
 
@@ -48,6 +49,8 @@ function App() {
         <Route exact path="/waitingscreen" component={WaitingScreen} />
         <Route exact path="/dashboard" component={Slidebar} />
         <Route exact path="/home" component={Home} />
+        <Route exact path="/add-subject" component={Departments} />
+        
       </Switch>
     </>
   );

@@ -141,7 +141,7 @@ const After_login = () => {
                       <i
                         style={{
                           position: "absolute",
-                          marginTop: "7px",
+                          marginTop: "10px",
                           marginLeft: "-20px",
                         }}
                         onClick={togglePasswordVisiblity}
@@ -153,7 +153,7 @@ const After_login = () => {
                       <i
                         style={{
                           position: "absolute",
-                          marginTop: "7px",
+                          marginTop: "10px",
                           marginLeft: "-20px",
                         }}
                         onClick={togglePasswordVisiblity}

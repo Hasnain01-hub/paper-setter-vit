@@ -6,12 +6,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Link, useHistory } from "react-router-dom";
 import { auth } from "../../Firebase";
-// import {
-//   multiFactor,
-//   PhoneAuthProvider,
-//   PhoneMultiFactorGenerator,
-//   RecaptchaVerifier,
-// } from "firebase/auth";
+import { useSelector } from "react-redux";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
@@ -23,25 +18,13 @@ const LoginPage = () => {
   };
 
   let history = useHistory();
-  const roleBasedRedirect = (res) => {
-    if (res.data.role === "admin") {
-      history.push("/admin/dashboard");
-    } else if (res.data.role === "faculty") {
-      history.push("/dashboard");
-    }
-  };
 
-  // const { user } = useSelector((state) => ({ ...state }));
-  // useEffect(() => {
-  //   let intended = history.location.state;
-  //   if (intended) {
-  //     return;
-  //   } else {
-  //     if (user && user.token) {
-  //       history.push("/");
-  //     }
-  //   }
-  // }, [user, history]);
+  const { user } = useSelector((state) => state.user);
+  useEffect(() => {
+    if (user && user.token) {
+      history.push("/home");
+    }
+  }, [user, history]);
   //to handle form and backend
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -93,7 +76,7 @@ const LoginPage = () => {
                     <i
                       style={{
                         position: "absolute",
-                        marginTop: "7px",
+                        marginTop: "10px",
                         marginLeft: "-20px",
                       }}
                       onClick={togglePasswordVisiblity}
@@ -105,7 +88,7 @@ const LoginPage = () => {
                     <i
                       style={{
                         position: "absolute",
-                        marginTop: "7px",
+                        marginTop: "10px",
                         marginLeft: "-20px",
                       }}
                       onClick={togglePasswordVisiblity}
@@ -123,7 +106,7 @@ const LoginPage = () => {
             </div>
           </div>
         </div>
-        <div id="2fa-captcha" class="justify-center flex"></div>
+        <div id="2fa-captcha" className="justify-center flex"></div>
         <ToastContainer />
       </div>
     </>

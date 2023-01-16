@@ -5,6 +5,7 @@ import "./login.css";
 import { Link, useHistory } from "react-router-dom";
 import Cryptr from "cryptr";
 import { auth } from "../../Firebase";
+import { useSelector } from "react-redux";
 const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -16,19 +17,13 @@ const Register = () => {
   const togglePasswordVisiblity = () => {
     setPasswordShown(passwordShown ? false : true);
   };
-
-  // const roleBasedRedirect = (res) => {
-  //   if (res.data.role === "admin") {
-  //     history.push("/admin/dashboard");
-  //   } else if (res.data.role === "faculty") {
-  //     history.push("/dashboard");
-  //   } else if (res.data.approved === false) {
-  //     history.push("/waiting");
-  //   } else {
-  //     history.push("/waiting");
-  //   }
-  // };
-
+  let history = useHistory();
+  const { user } = useSelector((state) => state.user);
+  useEffect(() => {
+    if (user && user.token) {
+      history.push("/home");
+    }
+  }, [user, history]);
   const registerWithEmailAndPassword = async (e) => {
     e.preventDefault();
     try {
@@ -103,7 +98,7 @@ const Register = () => {
                   <i
                     style={{
                       position: "absolute",
-                      marginTop: "7px",
+                      marginTop: "10px",
                       marginLeft: "-20px",
                     }}
                     onClick={togglePasswordVisiblity}
@@ -115,7 +110,7 @@ const Register = () => {
                   <i
                     style={{
                       position: "absolute",
-                      marginTop: "7px",
+                      marginTop: "10px",
                       marginLeft: "-20px",
                     }}
                     onClick={togglePasswordVisiblity}

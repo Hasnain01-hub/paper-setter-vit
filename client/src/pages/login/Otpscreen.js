@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { loginSuccess } from "../../reducer";
-import { createOrUpdateUser } from "../../function/User";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { createOrUpdateUser } from "../../function/User";
 import Cryptr from "cryptr";
 import { auth } from "../../Firebase";
 import {
@@ -149,7 +149,7 @@ const Otpscreen = () => {
                       <i
                         style={{
                           position: "absolute",
-                          marginTop: "7px",
+                          marginTop: "10px",
                           marginLeft: "-20px",
                         }}
                         onClick={togglePasswordVisiblity}
@@ -161,7 +161,7 @@ const Otpscreen = () => {
                       <i
                         style={{
                           position: "absolute",
-                          marginTop: "7px",
+                          marginTop: "10px",
                           marginLeft: "-20px",
                         }}
                         onClick={togglePasswordVisiblity}
