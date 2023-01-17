@@ -32,7 +32,7 @@ const Navbar = () => {
       <body>
         <nav className="navbar col-lg-12 col-12 p-0 fixed-top d-flex">
           <div className="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
-            <a className="navbar-brand brand-logo mr-5" href="/">
+            <a className="navbar-brand brand-logo mr-5" href="/home">
               <img
                 src="https://res.cloudinary.com/crunchbase-production/image/upload/c_lpad,h_256,w_256,f_auto,q_auto:eco,dpr_1/ue6gshlqvsqg2vasd89l"
                 className="mr-2"

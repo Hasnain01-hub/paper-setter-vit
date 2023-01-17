@@ -12,3 +12,10 @@ exports.addsubject = async (req, res) => {
     message: "Subject added successfully",
   });
 };
+
+exports.viewsubject = async (req, res) => {
+  await Subject.find({}).exec((err, data) => {
+    if (err) throw new Error(err);
+    res.json(data);
+  });
+};

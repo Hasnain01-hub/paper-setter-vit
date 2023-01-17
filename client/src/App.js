@@ -12,6 +12,7 @@ import After_login from "./pages/login/After_login";
 import Home from "./pages/home/Home";
 import WaitingScreen from "./pages/home/WaitingScreen";
 import Departments from "./pages/home/Departments";
+import Retrive_dept from "./pages/home/Retrive_dept";
 function App() {
   const dispatch = useDispatch();
 
@@ -19,7 +20,7 @@ function App() {
     const unsubscribe = auth.onAuthStateChanged(async (user) => {
       if (user) {
         const idTokenResult = await user.getIdTokenResult();
-        currentUser(idTokenResult.token)
+        await currentUser(idTokenResult.token)
           .then((res) => {
             dispatch(
               loginSuccess({
@@ -48,9 +49,10 @@ function App() {
         <Route exact path="/loginotp" component={After_login} />
         <Route exact path="/waitingscreen" component={WaitingScreen} />
         <Route exact path="/dashboard" component={Slidebar} />
-        <Route exact path="/home" component={Home} />
+        {/* <Route exact path="/home" component={Home} /> */}
+        <Route exact path="/home" component={Retrive_dept} />
+
         <Route exact path="/add-subject" component={Departments} />
-        
       </Switch>
     </>
   );

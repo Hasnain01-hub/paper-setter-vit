@@ -24,7 +24,13 @@ const Slidebar = () => {
           <li className="nav-item">
             <Link className="nav-link" to="/add-subject">
               <i class="ri-building-4-line"></i>&nbsp;
-              <span className="menu-title">Departments</span>
+              <span className="menu-title">Add Departments</span>
+            </Link>
+          </li>
+          <li className="nav-item">
+            <Link className="nav-link" to="/home">
+              <i class="ri-building-4-line"></i>&nbsp;
+              <span className="menu-title">View Departments</span>
             </Link>
           </li>
           <li className="nav-item">

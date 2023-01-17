@@ -816,6 +816,7 @@ body {
   overflow-x: hidden !important;
   display: -webkit-box;
   display: -ms-flexbox;
+  height: 10vh;
   display: flex;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
