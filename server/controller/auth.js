@@ -37,3 +37,25 @@ exports.currentUser = async (req, res) => {
     res.json(user);
   });
 };
+
+exports.userlist = async (req, res) => {
+  await User.find({})
+    .sort({ createdAt: -1 })
+    .exec((err, user) => {
+      if (err) throw new Error(err);
+      console.log(user);
+      res.json(user);
+    });
+};
+exports.updateuser = async (req, res) => {
+  const { email, phone, approved, role } = req.body;
+  await User.findOneAndUpdate(
+    { email, approved, role },
+    {
+      new: true,
+    }
+  ).exec((err, user) => {
+    if (err) throw new Error(err);
+    res.json(user);
+  });
+};

@@ -23,37 +23,37 @@ const Slidebar = () => {
         <ul className="nav">
           <li className="nav-item">
             <Link className="nav-link" to="/add-subject">
-              <i class="ri-building-4-line"></i>&nbsp;
+              <i className="ri-building-4-line"></i>&nbsp;
               <span className="menu-title">Add Departments</span>
             </Link>
           </li>
           <li className="nav-item">
             <Link className="nav-link" to="/home">
-              <i class="ri-building-4-line"></i>&nbsp;
+              <i className="ri-building-4-line"></i>&nbsp;
               <span className="menu-title">View Departments</span>
             </Link>
           </li>
           <li className="nav-item">
-            <Link className="nav-link" to="/view-product">
-              <i class="ri-file-line"></i>&nbsp;
-              <span className="menu-title">View Paper</span>
+            <Link className="nav-link" to="/view-user">
+              <i className="ri-file-line"></i>&nbsp;
+              <span className="menu-title">View user</span>
             </Link>
           </li>
           <li className="nav-item">
             <Link className="nav-link" to="/contact-details">
-              <i class="ri-attachment-line"></i>&nbsp;
+              <i className="ri-attachment-line"></i>&nbsp;
               <span className="menu-title">Upload Paper</span>
             </Link>
           </li>
           <li className="nav-item">
             <Link className="nav-link" to="/testimonials">
-              <i class="ri-map-pin-user-line"></i>&nbsp;
+              <i className="ri-map-pin-user-line"></i>&nbsp;
               <span className="menu-title">Profile Page</span>
             </Link>
           </li>
           <li className="nav-item">
             <span className="nav-link">
-              <i class="ri-logout-circle-r-line"></i>&nbsp;
+              <i className="ri-logout-circle-r-line"></i>&nbsp;
               <span onClick={logout} className="menu-title">
                 Logout
               </span>
