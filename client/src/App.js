@@ -14,6 +14,7 @@ import WaitingScreen from "./pages/home/WaitingScreen";
 import Departments from "./pages/home/Departments";
 import Retrive_dept from "./pages/home/Retrive_dept";
 import Viewuser from "./pages/home/Viewuser";
+import Uploadpaper from "./pages/home/Upload";
 function App() {
   const dispatch = useDispatch();
 
@@ -53,7 +54,8 @@ function App() {
         {/* <Route exact path="/home" component={Home} /> */}
         <Route exact path="/home" component={Retrive_dept} />
         <Route exact path="/view-user" component={Viewuser} />
-        
+        <Route exact path="/upload-paper" component={Uploadpaper} />
+
         <Route exact path="/add-subject" component={Departments} />
       </Switch>
     </>

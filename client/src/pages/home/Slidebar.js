@@ -40,7 +40,7 @@ const Slidebar = () => {
             </Link>
           </li>
           <li className="nav-item">
-            <Link className="nav-link" to="/contact-details">
+            <Link className="nav-link" to="/upload-paper">
               <i className="ri-attachment-line"></i>&nbsp;
               <span className="menu-title">Upload Paper</span>
             </Link>

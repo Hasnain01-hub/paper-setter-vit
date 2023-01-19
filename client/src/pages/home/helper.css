@@ -1,0 +1,18 @@
+.btnclass {
+  display: inline-block;
+  outline: 0;
+  border: none;
+  cursor: pointer;
+  height: 40px;
+  padding: 12px 17px;
+  border-radius: 50px;
+  
+  background-color: #2222220d;
+  color: #222;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.btnclass:hover {
+  background-color: #2222221a;
+}
