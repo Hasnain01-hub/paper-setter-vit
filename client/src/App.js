@@ -15,6 +15,7 @@ import Departments from "./pages/home/Departments";
 import Retrive_dept from "./pages/home/Retrive_dept";
 import Viewuser from "./pages/home/Viewuser";
 import Uploadpaper from "./pages/home/Upload";
+import Viewpaper from "./pages/home/Viewpaper";
 function App() {
   const dispatch = useDispatch();
 
@@ -52,6 +53,8 @@ function App() {
         <Route exact path="/waitingscreen" component={WaitingScreen} />
         <Route exact path="/dashboard" component={Slidebar} />
         {/* <Route exact path="/home" component={Home} /> */}
+
+        <Route exact path="/view-paper/:id" component={Viewpaper} />
         <Route exact path="/home" component={Retrive_dept} />
         <Route exact path="/view-user" component={Viewuser} />
         <Route exact path="/upload-paper" component={Uploadpaper} />

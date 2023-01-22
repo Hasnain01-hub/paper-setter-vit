@@ -1,6 +1,6 @@
 import { logoutSuccess } from "../../reducer";
 import { Link, useHistory } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import React from "react";
 // import './vendors/ti-icons/css/themify-icons.css'
 import { auth } from "../../Firebase";
@@ -17,6 +17,12 @@ const Slidebar = () => {
     });
   };
 
+  const { user } = useSelector((state) => state.user);
+  React.useEffect(() => {
+    if (user && user.approved == false) {
+      history.push("/");
+    }
+  }, [user]);
   return (
     <>
       <nav className="sidebar sidebar-offcanvas" id="sidebar">
@@ -45,12 +51,12 @@ const Slidebar = () => {
               <span className="menu-title">Upload Paper</span>
             </Link>
           </li>
-          <li className="nav-item">
+          {/* <li className="nav-item">
             <Link className="nav-link" to="/testimonials">
               <i className="ri-map-pin-user-line"></i>&nbsp;
               <span className="menu-title">Profile Page</span>
             </Link>
-          </li>
+          </li> */}
           <li className="nav-item">
             <span className="nav-link">
               <i className="ri-logout-circle-r-line"></i>&nbsp;

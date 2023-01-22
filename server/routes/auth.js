@@ -13,5 +13,5 @@ router.post("/create-user", createOrUpdateUser);
 router.post("/current-user", authCheck, userapproved, currentUser);
 router.post("/current-admin", authCheck, adminCheck, currentUser);
 router.get("/view-user", authCheck, adminCheck, userlist);
-router.put("/update-user", authCheck, adminCheck, updateuser);
+router.put("/update-user", authCheck, userapproved, updateuser);
 module.exports = router;

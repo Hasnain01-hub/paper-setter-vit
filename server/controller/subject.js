@@ -23,7 +23,8 @@ exports.viewsubject = async (req, res) => {
 
 //fetch paper
 exports.viewpaper = async (req, res) => {
-  await Paper.find({}).exec((err, data) => {
+  const { id } = req.params;
+  await Paper.find({ subject: id }).exec((err, data) => {
     if (err) throw new Error(err);
     res.json(data);
   });
@@ -42,5 +43,15 @@ exports.uploapaperdata = async (req, res) => {
   }).save();
   res.status(200).json({
     message: "Paper added successfully",
+  });
+};
+
+exports.deletePaper = async (req, res) => {
+  const { paper_id } = req.body;
+  console.log("id*****************", req.body);
+  await Paper.findOneAndDelete({ _id: paper_id }).exec((err, data) => {
+    if (err) throw new Error(err);
+    res.json("Paper deleted successfully");
+    console.log("data", data);
   });
 };

@@ -1,5 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import { getdept } from "../../function/Subject";
 import Navbar from "./Navbar";
 import Slidebar from "./Slidebar";
@@ -58,7 +59,8 @@ const Retrive_dept = () => {
                   {s.sem}
                 </div>
                 <div className="col col7" data-label="semester">
-                  {s._id}
+                  {/* {s._id} */}
+                  <Link to={`/view-paper/${s.subject}`}>View</Link>
                 </div>
               </li>
             );

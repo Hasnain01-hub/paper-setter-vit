@@ -8,8 +8,17 @@ import "./vendors/dataTables.bootstrap4.css";
 // import Logo from '../images/logo.svg'
 // import LogoMini from '../images/logo-mini.svg'
 import $ from "jquery";
+import { useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 const Navbar = () => {
+  const history = useHistory();
+  const { user } = useSelector((state) => state.user);
+  useEffect(() => {
+    if (user && user.approved == false) {
+      history.push("/");
+    }
+  }, [user]);
   useEffect(() => {
     var body = $("body");
     $('[data-toggle="offcanvas"]').on("click", function () {

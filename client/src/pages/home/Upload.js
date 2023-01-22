@@ -34,8 +34,8 @@ const Uploadpaper = () => {
 
   const fileUpload = async (e) => {
     e.preventDefault();
-    if (e.target.files[0].size > 3145728)
-      return toast.error("File size should be less than 3MB!");
+    if (e.target.files[0].size > 6291456)
+      return toast.error("File size should be less than 6MB!");
 
     setfile(e.target.files[0].name);
     const datas = new FormData();
@@ -56,7 +56,12 @@ const Uploadpaper = () => {
     if (dataFile.secure_url !== null) {
       setData({
         ...data,
-        paper: [dataFile.url, dataFile.public_id],
+        paper: [
+          dataFile.url,
+          dataFile.public_id,
+          dataFile.asset_id,
+          dataFile.original_filename,
+        ],
       });
       console.log(dataFile);
     }
@@ -81,21 +86,19 @@ const Uploadpaper = () => {
     }
   };
   const handleResumeRemove = (data) => {
+    console.log(data);
     setData({ ...data, paper: [] });
     let authtoken = user.token;
     console.log(data[1]);
     axios
       .post(
         "http://localhost:8000/api/removepaper",
-        { public_id: data[1] },
+        { asset_id: data[1] },
         { headers: { authtoken } }
       )
       .then((res) => {
         console.log(res);
-        const { resumes } = data;
-        let filteredImages = resumes.filter((item) => {
-          return item.public_id !== res.data.public_id;
-        });
+        toast.success("Resume removed");
       })
       .catch((err) => {});
   };

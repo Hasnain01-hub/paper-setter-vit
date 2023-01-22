@@ -20,9 +20,9 @@ export const getdept = async (authtoken) => {
   );
 };
 
-export const getpaper = async (authtoken) => {
+export const getpaper = async (authtoken, id) => {
   return await axios.get(
-    `${process.env.REACT_APP_API}/view-paper`,
+    `${process.env.REACT_APP_API}/view-paper/${id}`,
 
     {
       headers: {
@@ -36,6 +36,18 @@ export const uploadpaper = async (subject, authtoken) => {
   return await axios.post(
     `${process.env.REACT_APP_API}/upload-paper`,
     subject,
+    {
+      headers: {
+        authtoken,
+      },
+    }
+  );
+};
+
+export const deletepaper = async (authtoken, paper_id) => {
+  return await axios.post(
+    `${process.env.REACT_APP_API}/delete-paper`,
+    { paper_id },
     {
       headers: {
         authtoken,
