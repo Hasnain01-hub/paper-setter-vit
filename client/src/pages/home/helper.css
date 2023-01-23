@@ -87,6 +87,12 @@ img {
 }
 
 @media (max-width: 450px) {
+  .contact {
+    margin-bottom: 212px;
+  }
+  .bottomcard {
+    top: 70px;
+  }
   .boxcard {
     height: 250px;
   }
@@ -128,14 +134,35 @@ h2 {
   font-size: 27px;
   font-weight: var(--weight3);
 }
+.bottomcard {
+  position: fixed;
 
+  width: 100%;
+  align-items: center;
+  border-radius: 15px;
+  display: flex;
+  justify-content: space-evenly;
+  padding: 15px;
+  margin-left: auto;
+  background: rgba(255, 255, 255, 0.35);
+  box-shadow: 0 4px 12px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(1.5px);
+  -webkit-backdrop-filter: blur(1.5px);
+  margin-right: auto;
+  margin-bottom: 20px;
+  padding: 20px;
+}
 @media (min-width: 950px) {
   .row1-container {
     display: flex;
     justify-content: center;
     align-items: center;
   }
-
+  .bottomcard {
+    left: 25%;
+    bottom: 0;
+    width: 50%;
+  }
   .row2-container {
     display: flex;
     justify-content: center;
@@ -164,4 +191,30 @@ h2 {
     position: relative;
     top: 12vh;
   }
+}
+input[type="checkbox"] {
+  cursor: pointer;
+  pointer-events: stroke;
+}
+
+.selectpaper {
+  display: inline-block;
+  outline: none;
+  cursor: pointer;
+  font-size: 16px;
+  line-height: 20px;
+  font-weight: 600;
+  height: 50px;
+  border-radius: 8px;
+  padding: 14px 24px;
+  border: none;
+  transition: box-shadow 0.2s ease 0s, -ms-transform 0.1s ease 0s,
+    -webkit-transform 0.1s ease 0s, transform 0.1s ease 0s;
+  background: linear-gradient(
+    to right,
+    rgb(230, 30, 77) 0%,
+    rgb(227, 28, 95) 50%,
+    rgb(215, 4, 102) 100%
+  );
+  color: #fff;
 }

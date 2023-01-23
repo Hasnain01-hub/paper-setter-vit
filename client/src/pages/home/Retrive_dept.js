@@ -24,7 +24,7 @@ const Retrive_dept = () => {
     <>
       <Navbar />
       <Slidebar />
-      <div className="container3">
+      <div className="container3 ">
         <h2>Department</h2>
         <ul className="responsive-table">
           <li className="table-header">

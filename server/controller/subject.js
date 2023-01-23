@@ -55,3 +55,17 @@ exports.deletePaper = async (req, res) => {
     console.log("data", data);
   });
 };
+
+// exports.updaterandom = async (req, res) => {
+//   const { random } = req.body;
+
+//   const user = await Paper.findOneAndUpdate(
+//     { email },
+//     { ...{ approved: approved, role: role } },
+//     {
+//       new: true,
+//     }
+//   );
+//   res.json(user);
+//   console.log(user);
+// };

@@ -22,6 +22,9 @@ const paperSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    random: {
+      type: String,
+    },
   },
   { timestamps: true }
 );

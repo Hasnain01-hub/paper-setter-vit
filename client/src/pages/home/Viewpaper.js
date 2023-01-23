@@ -5,7 +5,7 @@ import DocViewer, { DocViewerRenderers } from "@cyntler/react-doc-viewer";
 import Modal from "react-modal";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { deletepaper, getpaper } from "../../function/Subject";
+import { deletepaper, getpaper, uprandom } from "../../function/Subject";
 import Navbar from "./Navbar";
 import Slidebar from "./Slidebar";
 import "./helper.css";
@@ -26,6 +26,7 @@ const customStyles = {
 };
 const Viewpaper = () => {
   const [modalIsOpen, setIsOpen] = React.useState(false);
+  const [check, setcheckbox] = React.useState([]);
   const id = useParams().id;
   const [docx, setdocx] = React.useState({ link: "", subject: "" });
   function openModal() {
@@ -72,9 +73,29 @@ const Viewpaper = () => {
       })
       .catch((err) => {});
   };
+  const [selectedpaper, setselectedpaper] = React.useState();
+  const generaterandom = async () => {
+    var randomselect = Math.floor(Math.random() * check.length);
+    setselectedpaper(check[randomselect].index);
+    console.log(check[randomselect].index);
+    // await uprandom(user.token, randomselect).then((res) => {
+    //   loadAlldata(user, id);
+    //   toast.success("Paper deleted successfully");
+    // });
+  };
+  const changeenent = (e, index) => {
+    let key = e.target.value;
+    let value = e.target.checked;
 
+    if (value == false) {
+      setcheckbox(check.filter((item) => item[key] != true));
+    } else {
+      setcheckbox([...check, { [e.target.value]: e.target.checked, index }]);
+    }
+  };
   return (
     <>
+      {console.log(selectedpaper)}
       <Navbar />
       <Slidebar />
       {user && user.role == "admin" ? (
@@ -84,49 +105,86 @@ const Viewpaper = () => {
               No data found
             </h1>
           ) : (
-            data.map((item) => {
-              return (
-                <>
-                  <div class="boxcard red" data-aos="zoom-in" key={item._id}>
-                    <div className="detail">
-                      <p>Branch: {item.branch}</p>
-                      <p>subject: {item.subject}</p>
-                      <p>Semester: {item.sem}</p>
-                      <p>Added By: {item.addedby}</p>
-                      <p>
-                        Preview Paper:
-                        <a
-                          style={{ color: "blue", cursor: "pointer" }}
-                          onClick={() => {
-                            openModal(item.event);
-                            setdocx({
-                              link: item.paper[0],
-                              subject: item.subject,
-                            });
+            <>
+              {data.map((item, index) => {
+                return (
+                  <>
+                    <div class="boxcard red" data-aos="zoom-in" key={item._id}>
+                      <div className="detail">
+                        <p>Paper No: {index}</p>
+                        <p>Branch: {item.branch}</p>
+                        <p>subject: {item.subject}</p>
+                        <p>Semester: {item.sem}</p>
+                        <p>Added By: {item.addedby}</p>
+                        <p>
+                          Preview Paper:
+                          <a
+                            style={{ color: "blue", cursor: "pointer" }}
+                            onClick={() => {
+                              openModal(item.event);
+                              setdocx({
+                                link: item.paper[0],
+                                subject: item.subject,
+                              });
+                            }}
+                          >
+                            &nbsp;View
+                          </a>
+                        </p>
+                        <i
+                          onClick={(e) => {
+                            deletep(e, item._id, item.paper[1]);
                           }}
-                        >
-                          &nbsp;View
-                        </a>
-                      </p>
-                      <i
-                        onClick={(e) => {
-                          deletep(e, item._id, item.paper[1]);
-                        }}
-                        style={{
-                          float: "right",
-                          color: "red",
-                          fontSize: "20px",
-                          cursor: "pointer",
-                        }}
-                        className="ri-delete-bin-7-line"
-                      ></i>
+                          style={{
+                            float: "right",
+                            color: "red",
+                            fontSize: "20px",
+                            cursor: "pointer",
+                          }}
+                          className="ri-delete-bin-7-line"
+                        ></i>
+                      </div>
+                      {/* checkbox */}
+                      <div>
+                        <input
+                          type="checkbox"
+                          value={item._id}
+                          style={{
+                            width: "15px",
+                            height: "15px",
+                            margin: "6px",
+                            opacity: "1",
+                            padding: "5px",
+                            outlineColor: "black",
+                            cursor: "pointer",
+                            position: "relative",
+                          }}
+                          onChange={(e) => changeenent(e, index)}
+                        />
+                        <label style={{}} className="select">
+                          Select
+                        </label>
+                      </div>
+                      {/* <img src="https://assets.codepen.io/2301174/icon-supervisor.svg" alt=""/> */}
                     </div>
-                    {/* <img src="https://assets.codepen.io/2301174/icon-supervisor.svg" alt=""/> */}
-                  </div>
-                </>
-              );
-              /* Closing the `map` function. */
-            })
+                  </>
+                );
+                /* Closing the `map` function. */
+              })}
+              <div className="bottomcard">
+                <button onClick={generaterandom} className="selectpaper">
+                  Generate Random
+                </button>
+                <br />
+                {selectedpaper >= 0 ? (
+                  <span>
+                    <b>Selected Paper {selectedpaper} </b>
+                  </span>
+                ) : (
+                  <></>
+                )}
+              </div>
+            </>
           )}
         </div>
       ) : (

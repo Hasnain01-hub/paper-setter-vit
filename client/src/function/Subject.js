@@ -55,3 +55,15 @@ export const deletepaper = async (authtoken, paper_id) => {
     }
   );
 };
+
+export const uprandom = async (authtoken, random, id) => {
+  return await axios.post(
+    `${process.env.REACT_APP_API}/update-random-no`,
+    { random, id },
+    {
+      headers: {
+        authtoken,
+      },
+    }
+  );
+};
