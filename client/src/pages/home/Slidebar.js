@@ -27,24 +27,28 @@ const Slidebar = () => {
     <>
       <nav className="sidebar sidebar-offcanvas" id="sidebar">
         <ul className="nav">
-          <li className="nav-item">
-            <Link className="nav-link" to="/add-subject">
-              <i className="ri-building-4-line"></i>&nbsp;
-              <span className="menu-title">Add Departments</span>
-            </Link>
-          </li>
+          {user && user.role == "admin" && (
+            <li className="nav-item">
+              <Link className="nav-link" to="/add-subject">
+                <i className="ri-building-4-line"></i>&nbsp;
+                <span className="menu-title">Add Departments</span>
+              </Link>
+            </li>
+          )}
           <li className="nav-item">
             <Link className="nav-link" to="/home">
               <i className="ri-building-4-line"></i>&nbsp;
               <span className="menu-title">View Departments</span>
             </Link>
           </li>
-          <li className="nav-item">
-            <Link className="nav-link" to="/view-user">
-              <i className="ri-file-line"></i>&nbsp;
-              <span className="menu-title">View user</span>
-            </Link>
-          </li>
+          {user && user.role == "admin" && (
+            <li className="nav-item">
+              <Link className="nav-link" to="/view-user">
+                <i className="ri-file-line"></i>&nbsp;
+                <span className="menu-title">View user</span>
+              </Link>
+            </li>
+          )}
           <li className="nav-item">
             <Link className="nav-link" to="/upload-paper">
               <i className="ri-attachment-line"></i>&nbsp;

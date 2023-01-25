@@ -27,6 +27,7 @@ exports.viewpaper = async (req, res) => {
   await Paper.find({ subject: id }).exec((err, data) => {
     if (err) throw new Error(err);
     res.json(data);
+    console.log(data);
   });
 };
 

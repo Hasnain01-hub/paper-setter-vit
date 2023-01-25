@@ -40,14 +40,18 @@ const Viewpaper = () => {
   const [data, setData] = React.useState([]);
   const [fdata, setfilter] = React.useState([]);
   React.useEffect(() => {
-    if ((user && user.token, id)) {
+    if (user && user.token && id) {
       loadAlldata(user, id);
     }
   }, [user, id]);
   const loadAlldata = async (user, id) => {
     await getpaper(user.token, id).then((res) => {
       setData(res.data);
-      setfilter(res.data.filter((item) => item.addedby == user.email));
+      setfilter(
+        res.data.filter((item) => {
+          return item.addedby == user.email;
+        })
+      );
     });
   };
   const deletep = async (e, p_id, pub_id) => {
@@ -83,7 +87,7 @@ const Viewpaper = () => {
     //   toast.success("Paper deleted successfully");
     // });
   };
-  const changeenent = (e, index) => {
+  const changevent = (e, index) => {
     let key = e.target.value;
     let value = e.target.checked;
 
@@ -95,7 +99,7 @@ const Viewpaper = () => {
   };
   return (
     <>
-      {console.log(selectedpaper)}
+      {console.log(fdata)}
       <Navbar />
       <Slidebar />
       {user && user.role == "admin" ? (
@@ -124,7 +128,7 @@ const Viewpaper = () => {
                               openModal(item.event);
                               setdocx({
                                 link: item.paper[0],
-                                subject: item.subject,
+                                subject: item.paper[3],
                               });
                             }}
                           >
@@ -159,7 +163,7 @@ const Viewpaper = () => {
                             cursor: "pointer",
                             position: "relative",
                           }}
-                          onChange={(e) => changeenent(e, index)}
+                          onChange={(e) => changevent(e, index)}
                         />
                         <label style={{}} className="select">
                           Select
@@ -191,49 +195,49 @@ const Viewpaper = () => {
         <>
           <div className="contact">
             {fdata.length <= 0 ? (
-              <center>
-                <h1 style={{ textAlign: "center", margin: "0 auto" }}>
-                  No data found
-                </h1>
-              </center>
+              <h1 style={{ textAlign: "center", margin: "0 auto" }}>
+                No data found
+              </h1>
             ) : (
               fdata.map((item) => {
-                <div class="boxcard red" data-aos="zoom-in" key={item._id}>
-                  <div className="detail">
-                    <p>Branch: {item.branch}</p>
-                    <p>subject: {item.subject}</p>
-                    <p>Semester: {item.sem}</p>
-                    <p>Added By: {item.addedby}</p>
-                  </div>
-                  <p>
-                    Preview Paper:
-                    <a
-                      style={{ color: "blue", cursor: "pointer" }}
-                      onClick={() => {
-                        openModal(item.event);
-                        setdocx({
-                          link: item.paper[0],
-                          subject: item.paper[3],
-                        });
+                return (
+                  <div class="boxcard red" data-aos="zoom-in" key={item._id}>
+                    <div className="detail">
+                      <p>Branch: {item.branch}</p>
+                      <p>subject: {item.subject}</p>
+                      <p>Semester: {item.sem}</p>
+                      <p>Added By: {item.addedby}</p>
+                    </div>
+                    <p>
+                      Preview Paper:
+                      <a
+                        style={{ color: "blue", cursor: "pointer" }}
+                        onClick={() => {
+                          openModal(item.event);
+                          setdocx({
+                            link: item.paper[0],
+                            subject: item.paper[3],
+                          });
+                        }}
+                      >
+                        &nbsp;View
+                      </a>
+                    </p>
+                    <i
+                      onClick={(e) => {
+                        deletep(e, item._id, item.paper[1]);
                       }}
-                    >
-                      &nbsp;View
-                    </a>
-                  </p>
-                  <i
-                    onClick={(e) => {
-                      deletep(e, item._id, item.paper[1]);
-                    }}
-                    style={{
-                      float: "right",
-                      color: "red",
-                      fontSize: "20px",
-                      cursor: "pointer",
-                    }}
-                    className="ri-delete-bin-7-line"
-                  ></i>
-                  {/* <img src="https://assets.codepen.io/2301174/icon-supervisor.svg" alt=""/> */}
-                </div>;
+                      style={{
+                        float: "right",
+                        color: "red",
+                        fontSize: "20px",
+                        cursor: "pointer",
+                      }}
+                      className="ri-delete-bin-7-line"
+                    ></i>
+                    {/* <img src="https://assets.codepen.io/2301174/icon-supervisor.svg" alt=""/> */}
+                  </div>
+                );
               })
             )}
           </div>
