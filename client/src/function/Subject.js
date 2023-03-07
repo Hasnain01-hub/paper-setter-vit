@@ -32,6 +32,18 @@ export const getpaper = async (authtoken, id) => {
   );
 };
 
+export const getallpaper = async (authtoken) => {
+  return await axios.get(
+    `${process.env.REACT_APP_API}/view-all-paper`,
+
+    {
+      headers: {
+        authtoken,
+      },
+    }
+  );
+};
+
 export const uploadpaper = async (subject, authtoken) => {
   return await axios.post(
     `${process.env.REACT_APP_API}/upload-paper`,

@@ -1,7 +1,8 @@
+import axios from "axios";
 import React from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { getdept } from "../../function/Subject";
+import { getallpaper, getdept, getpaper } from "../../function/Subject";
 import Navbar from "./Navbar";
 import Slidebar from "./Slidebar";
 import "./table.css";
@@ -11,6 +12,7 @@ const Retrive_dept = () => {
   React.useEffect(() => {
     if (user && user.token) {
       loadAllServices(user);
+      loadAlldata(user);
     }
   }, [user]);
 
@@ -20,23 +22,50 @@ const Retrive_dept = () => {
       console.log(res.data);
     });
   };
+  const [paper, setPaper] = React.useState([]);
+  const loadAlldata = async (user) => {
+    await getallpaper(user.token).then((res) => {
+      setPaper(res.data);
+    });
+  };
+  const deleteDept = async (e, d_id, token) => {
+    e.preventDefault();
+    console.log(d_id);
+    if (window.confirm("Are you sure you want to delete this department?")) {
+      let authtoken = token;
+      axios
+        .post(
+          `${process.env.REACT_APP_API}/removedept`,
+          { dept_id: d_id },
+          { headers: { authtoken } }
+        )
+        .then((res) => {
+          console.log(res.data);
+          loadAllServices(user);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  };
   return (
     <>
       <Navbar />
       <Slidebar />
       <div className="container3 ">
-        <h2>Department</h2>
+        <h2>Subjects</h2>
         <ul className="responsive-table">
           <li className="table-header">
             <div className="col col1">Branch</div>
             <div className="col col2" style={{ paddingRight: "6vw" }}>
               Subject
             </div>
-            <div className="col col3" style={{ paddingRight: "6vw" }}>
+            <div className="col col4" style={{ paddingRight: "6vw" }}>
               Year
             </div>
 
             <div className="col col6">Sem</div>
+            <div className="col col6">No of Paper</div>
             <div className="col col7">View</div>
           </li>
           {dept.map((s) => {
@@ -58,10 +87,26 @@ const Retrive_dept = () => {
                 <div className="col col6" data-label="semester">
                   {s.sem}
                 </div>
+                <div className="col col6" data-label="No of Paper">
+                  {JSON.stringify(
+                    paper.filter((item) => item.subject == s.subject).length
+                  )}
+                </div>
                 <div className="col col7" data-label="semester">
                   {/* {s._id} */}
                   <Link to={`/view-paper/${s.subject}`}>View</Link>
                 </div>
+
+                <i
+                  onClick={(e) => deleteDept(e, s._id, user.token)}
+                  style={{
+                    float: "right",
+                    color: "red",
+                    fontSize: "20px",
+                    cursor: "pointer",
+                  }}
+                  className="ri-delete-bin-7-line"
+                ></i>
               </li>
             );
           })}

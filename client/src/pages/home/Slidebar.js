@@ -27,11 +27,28 @@ const Slidebar = () => {
     <>
       <nav className="sidebar sidebar-offcanvas" id="sidebar">
         <ul className="nav">
+          <li className="nav-item">
+            <Link className="nav-link" to="/home">
+              <i className="ri-map-pin-user-line"></i>&nbsp;
+              <span className="menu-title">{user && user.email}</span>
+            </Link>
+
+            <li
+              style={{
+                textAlign: "center",
+                marginBottom: "0",
+                lineHeight: "0.6",
+              }}
+            >
+              <span className="menu-title">{user && user.role}</span>
+            </li>
+          </li>
+
           {user && user.role == "admin" && (
             <li className="nav-item">
               <Link className="nav-link" to="/add-subject">
                 <i className="ri-building-4-line"></i>&nbsp;
-                <span className="menu-title">Add Departments</span>
+                <span className="menu-title">Add Subjects</span>
               </Link>
             </li>
           )}

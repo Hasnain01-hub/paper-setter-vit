@@ -12,7 +12,7 @@ import After_login from "./pages/login/After_login";
 import Home from "./pages/home/Home";
 import WaitingScreen from "./pages/home/WaitingScreen";
 import Departments from "./pages/home/Departments";
-import Retrive_dept from "./pages/home/Retrive_dept";
+import Retrive_dept from "./pages/home/Retrive_subject";
 import Viewuser from "./pages/home/Viewuser";
 import Uploadpaper from "./pages/home/Upload";
 import Viewpaper from "./pages/home/Viewpaper";

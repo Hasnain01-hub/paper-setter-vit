@@ -1,5 +1,6 @@
 const Subject = require("../models/subject");
 const Paper = require("../models/paperdetails");
+const Dep = require("../models/subject");
 exports.addsubject = async (req, res) => {
   const { branch, subject, year, sem } = req.body;
 
@@ -30,6 +31,13 @@ exports.viewpaper = async (req, res) => {
     console.log(data);
   });
 };
+exports.viewallpaper = async (req, res) => {
+  await Paper.find({}).exec((err, data) => {
+    if (err) throw new Error(err);
+    res.json(data);
+    console.log(data);
+  });
+};
 
 //upload paper
 exports.uploapaperdata = async (req, res) => {
@@ -54,6 +62,15 @@ exports.deletePaper = async (req, res) => {
     if (err) throw new Error(err);
     res.json("Paper deleted successfully");
     console.log("data", data);
+  });
+};
+
+exports.deleteDept = async (req, res) => {
+  const { dept_id } = req.body;
+  console.log("id*****************", req.body);
+  await Dep.findOneAndDelete({ _id: dept_id }).exec((err, data) => {
+    if (err) throw new Error(err);
+    res.json("Dept deleted successfully");
   });
 };
 
