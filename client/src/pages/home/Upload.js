@@ -92,7 +92,7 @@ const Uploadpaper = () => {
     console.log(data[1]);
     axios
       .post(
-        "http://localhost:8000/api/removepaper",
+        process.env.REACT_APP_API + "/removepaper",
         { asset_id: data[1] },
         { headers: { authtoken } }
       )

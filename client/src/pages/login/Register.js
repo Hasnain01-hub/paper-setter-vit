@@ -45,7 +45,9 @@ const Register = () => {
         };
         await user
           /* Sending an email to the user with a link to the url provided. */
-          .sendEmailVerification({ url: "http://localhost:3000/otp" })
+          .sendEmailVerification({
+            url: process.env.REACT_APP_CLIENT_URL + "otp",
+          })
           .then(async () => {
             setloading(false);
             window.localStorage.setItem("user", JSON.stringify(userdata));
