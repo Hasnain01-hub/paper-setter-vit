@@ -31,7 +31,9 @@ app.use(cors());
 
 //routes midleware
 readdirSync("./routes").map((r) => app.use("/api", require("./routes/" + r)));
-
+app.use("/", function (req, res) {
+  res.send("Hello World");
+});
 //port
 const port = process.env.PORT || 8000;
 app.listen(port, () => {
