@@ -11,14 +11,11 @@ const app = express();
 
 //db
 mongoose
-  .connect(
-    process.env.REACT_APP_MONGO_URI ?? "mongodb://localhost:27017/papersetter",
-    {
-      useNewUrlParser: true,
-      useCreateIndex: true,
-      useUnifiedTopology: true,
-    }
-  )
+  .connect(process.env.REACT_APP_MONGO_URI ?? "", {
+    useNewUrlParser: true,
+    useCreateIndex: true,
+    useUnifiedTopology: true,
+  })
   .then(() => console.log("DB CONNECTED"))
   .catch((err) => console.log("DB CONNECTION ERR", err));
 
