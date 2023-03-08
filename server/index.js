@@ -34,7 +34,11 @@ app.use(cors());
 app.use("/", function (req, res) {
   res.send("Hello World");
 });
-readdirSync("./routes").map((r) => app.use("/api", require("./routes/" + r)));
+// readdirSync("./routes").map((r) => app.use("/api", require("./routes/" + r)));
+const auth = require("./routes/auth");
+const subject = require("./routes/subject");
+app.use("/api", auth);
+app.use("/api", subject);
 //port
 const port = process.env.PORT || 8000;
 app.listen(port, () => {
