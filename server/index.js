@@ -2,7 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const morgan = require("morgan");
-const { readdirSync } = require("fs");
+// const { readdirSync } = require("fs");
 const cors = require("cors");
 require("dotenv").config();
 
