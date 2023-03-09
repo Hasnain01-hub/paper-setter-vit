@@ -6,8 +6,7 @@ import { Link, useHistory } from "react-router-dom";
 import Cryptr from "cryptr";
 import { auth } from "../../Firebase";
 import { useSelector } from "react-redux";
-import { Buffer } from "buffer";
-Buffer.from("anything", "base64");
+window.Buffer = window.Buffer || require("buffer").Buffer;
 const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
