@@ -13,12 +13,11 @@ const Retrive_dept = () => {
   let history = useHistory();
   React.useEffect(() => {
     const loadUser = async () => {
-      if (user && user.token) {
+      if (user && user.approved == true) {
         loadAllServices(user);
         loadAlldata(user);
-        return;
+        return user;
       }
-      return user;
     };
     loadUser().then((res) => {
       if (!res) {

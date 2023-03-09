@@ -21,7 +21,7 @@ const LoginPage = () => {
 
   const { user } = useSelector((state) => state.user);
   useEffect(() => {
-    if (user && user.token) {
+    if (user && user.approved == true) {
       history.push("/home");
     }
   }, [user, history]);
