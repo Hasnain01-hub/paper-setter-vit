@@ -61,6 +61,9 @@ const Register = () => {
         toast.error("Please fill all the fields");
       }
     } catch (err) {
+      if (err.code === "auth/email-already-in-use") {
+        toast.error("The Email is already in use by another account");
+      }
       console.error(err);
       // alert("Register Failed");
     }
