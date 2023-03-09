@@ -2,6 +2,7 @@ import axios from "axios";
 import React from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { getallpaper, getdept, getpaper } from "../../function/Subject";
 import Navbar from "./Navbar";
 import Slidebar from "./Slidebar";
@@ -9,11 +10,22 @@ import "./table.css";
 const Retrive_dept = () => {
   const [dept, setdept] = React.useState([]);
   const { user } = useSelector((state) => state.user);
+  let history = useHistory();
   React.useEffect(() => {
-    if (user && user.token) {
-      loadAllServices(user);
-      loadAlldata(user);
-    }
+    const loadUser = async () => {
+      if (user && user.token) {
+        loadAllServices(user);
+        loadAlldata(user);
+        return;
+      }
+      return user;
+    };
+    loadUser().then((res) => {
+      if (!res) {
+        history.push("/");
+      }
+    });
+    return;
   }, [user]);
 
   const loadAllServices = async (user) => {
