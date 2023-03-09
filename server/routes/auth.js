@@ -10,6 +10,7 @@ const { createOrUpdateUser, register } = require("../controller/auth");
 const { currentUser, updateuser, userlist } = require("../controller/auth");
 
 router.post("/create-user", createOrUpdateUser);
+// router.get("/push-user", pushuser);
 router.post("/current-user", authCheck, userapproved, currentUser);
 router.post("/current-admin", authCheck, adminCheck, currentUser);
 router.get("/view-user", authCheck, adminCheck, userlist);
