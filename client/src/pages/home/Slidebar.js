@@ -22,6 +22,7 @@ const Slidebar = () => {
     if (user && user.approved == false) {
       history.push("/");
     }
+    
   }, [user]);
   return (
     <>
